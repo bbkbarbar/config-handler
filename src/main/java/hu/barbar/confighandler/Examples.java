@@ -1,4 +1,4 @@
-package hu.barbar.config-handler;
+package hu.barbar.confighandler;
 
 public class Examples {
 

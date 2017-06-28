@@ -1,4 +1,4 @@
-package hu.barbar.config-handler;
+package hu.barbar.confighandler;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -103,7 +103,7 @@ public class JsonConfigHandler {
 	 * <br> This JSON file will be used to find the specified key by the getConfig.. methods.
 	 * @param configSourceFilePath
 	 */
-	public static void setConfigSourceJSON(String configSourceFilePath) {
+	public void setConfigSourceJSON(String configSourceFilePath) {
 		this.configSourceJSONPath = configSourceFilePath;
 		if(!FileHandler.fileExists(configSourceFilePath)){
 			//TODO
