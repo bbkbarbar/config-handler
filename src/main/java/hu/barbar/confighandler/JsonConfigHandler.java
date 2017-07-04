@@ -220,12 +220,42 @@ public class JsonConfigHandler {
 			this.configJson.put(key, obj);
 			return storeConfigToJsonFile();
 		}else{
-			System.out.println("Feature not implemented yet: Store values under multi-level key.");
 			
-			String[] keyArr = key.split(SEPARATOR_OF_MULTI_LEVEL_KEYS);
+			putIntoJson(this.configJson, key, obj);
+			return storeConfigToJsonFile();
 			
-			return false;
 		}
+		
+	}
+	
+	private JSONObject putIntoJson(JSONObject json, String key, Object obj){
+		
+		if(json == null){
+			json = new JSONObject();
+		}
+		if(key == null || obj == null){
+			return null;
+		}
+		
+		if(key.contains(SEPARATOR_OF_MULTI_LEVEL_KEYS)){
+			String firstPartOfKey = key.substring(0, key.indexOf(SEPARATOR_OF_MULTI_LEVEL_KEYS));
+			String newKey = key.substring(key.indexOf(SEPARATOR_OF_MULTI_LEVEL_KEYS) + 1);
+			
+			if(json.get(key) != null){
+				JSONObject subJson = (JSONObject) json.get(key);
+				subJson = putIntoJson(subJson, newKey, obj);
+				json.put(firstPartOfKey, subJson);
+			}else{
+				JSONObject subJson = putIntoJson(new JSONObject(), newKey, obj);
+				json.put(firstPartOfKey, subJson);
+			}
+					
+		}else{
+			json.put(key, obj);
+		}
+		
+		
+		return json;
 		
 	}
 	

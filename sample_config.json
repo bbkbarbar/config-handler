@@ -1,1 +1,9 @@
-{"parameter_root":{"sub-parameter1":"sub-value1","sub-parameter2":"sub-value2"},"new key":"data for new key22","boolVal":false,"parameter1":"value1"}
+{  
+   "parameter_root":{  
+      "sub-parameter1":"sub-value1",
+      "sub-parameter2":"sub-value2"
+   },
+   "new key":"data for new key22",
+   "boolVal":false,
+   "parameter1":"value1"
+}
