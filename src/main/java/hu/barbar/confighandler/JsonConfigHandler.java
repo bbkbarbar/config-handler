@@ -52,6 +52,24 @@ public class JsonConfigHandler {
 		return defaultValue;
 	}
 	
+	
+	/*
+	 *  GET LONG
+	 */
+	public Long getLong(String key) {
+		return (Long)getElementFromJson(key);
+	}
+
+	public Long getLong(String key, Long defaultValue) {
+		Long result = getLong(key);
+		if(result != null){
+			return result;
+		}
+		return defaultValue;
+	}
+	
+	
+	
 
 	private Object getElementFromJson(String jsonKey){
 		if(!configJsonHasBeenRead){
@@ -98,6 +116,8 @@ public class JsonConfigHandler {
 
 	}
 
+	
+	
 	/**
 	 * Set the filepath of configSource JSON. (e.g.: ../data/config.json)
 	 * <br> This JSON file will be used to find the specified key by the getConfig.. methods.
