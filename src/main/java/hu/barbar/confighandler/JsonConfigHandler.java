@@ -8,6 +8,8 @@ import hu.barbar.util.FileHandler;
 
 public class JsonConfigHandler {
 
+	private static final String SEPARATOR_OF_MULTI_LEVEL_KEYS = ".";
+
 	private String configSourceJSONPath = null;
 
 	private JSONObject configJson = null;
@@ -151,12 +153,12 @@ public class JsonConfigHandler {
 			return json.get(jsonKey);
 		}
 
-		if(jsonKey.contains(".")){
+		if(jsonKey.contains(SEPARATOR_OF_MULTI_LEVEL_KEYS)){
 
 			//System.out.println("Key |" + jsonKey + "| contains \".\"");
 
-			String firstPartOfKey = jsonKey.substring(0, jsonKey.indexOf("."));
-			String newKey = jsonKey.substring(jsonKey.indexOf(".") + 1);
+			String firstPartOfKey = jsonKey.substring(0, jsonKey.indexOf(SEPARATOR_OF_MULTI_LEVEL_KEYS));
+			String newKey = jsonKey.substring(jsonKey.indexOf(SEPARATOR_OF_MULTI_LEVEL_KEYS) + 1);
 			//System.out.println("firstPartOfKey: " + firstPartOfKey);
 			//System.out.println("newKey: |" + newKey + "|");
 			JSONObject newJSONObject = (JSONObject) json.get(firstPartOfKey);
@@ -214,12 +216,14 @@ public class JsonConfigHandler {
 		if(!configJsonHasBeenRead){
 			readConfigFromJsonFile();
 		}
-		if(!(key.contains("."))){
+		if(!(key.contains(SEPARATOR_OF_MULTI_LEVEL_KEYS))){
 			this.configJson.put(key, obj);
-			storeConfigToJsonFile();
-			return true;
+			return storeConfigToJsonFile();
 		}else{
 			System.out.println("Feature not implemented yet: Store values under multi-level key.");
+			
+			String[] keyArr = key.split(SEPARATOR_OF_MULTI_LEVEL_KEYS);
+			
 			return false;
 		}
 		
