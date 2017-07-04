@@ -12,7 +12,7 @@ public class JsonConfigHandler {
 
 	private JSONObject configJson = null;
 
-	private static boolean configJsonHasBeenRead = false;
+	private boolean configJsonHasBeenRead = false;
 
 
 	public JsonConfigHandler(String configSourceJSONPath){
@@ -23,11 +23,21 @@ public class JsonConfigHandler {
 	/*
 	 *  LOAD PARAMETERS FROM ANY JSON
 	 */
-	
+	/**
+	 * Get Object value for given key in json config.
+	 * @param key
+	 * @return
+	 */
 	public Object get(String key) {
 		return getElementFromJson(key);
 	}
-
+	
+	/**
+	 * Get Object value for given key in json config with default value.
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
 	public Object get(String key, Object defaultValue) {
 		Object result = getElementFromJson(key);
 		if(result != null){
@@ -40,10 +50,21 @@ public class JsonConfigHandler {
 	/*
 	 *  GET STRING
 	 */
+	/**
+	 * Get String value for given key in json config.
+	 * @param key
+	 * @return
+	 */
 	public String getString(String key) {
 		return (String)getElementFromJson(key);
 	}
-
+	
+	/**
+	 * Get String value for given key in json config with default value.
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
 	public String getString(String key, String defaultValue) {
 		String result = getString(key);
 		if(result != null){
@@ -56,10 +77,23 @@ public class JsonConfigHandler {
 	/*
 	 *  GET LONG
 	 */
+	/**
+	 * Get Long value for given key in json config.
+	 * <br> "integer" -like numeric values can read as long.
+	 * @param key
+	 * @return
+	 */
 	public Long getLong(String key) {
 		return (Long)getElementFromJson(key);
 	}
-
+	
+	/**
+	 * Get Long value for given key in json config with default value.
+	 * <br> "integer" -like numeric values can read as long.
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
 	public Long getLong(String key, Long defaultValue) {
 		Long result = getLong(key);
 		if(result != null){
@@ -68,6 +102,24 @@ public class JsonConfigHandler {
 		return defaultValue;
 	}
 	
+	
+	/*
+	 *  GET BOOL
+	 */
+	/**
+	 * Get boolean value for given key in json config.
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
+	public boolean getBool(String key, boolean defaultValue) {
+		Object obj = getElementFromJson(key);
+		if(obj == null) {
+			//System.out.println("Bool is null: |" + key + "|");
+			return defaultValue;
+		}
+		return (boolean)obj;
+	}
 	
 	
 
@@ -136,7 +188,11 @@ public class JsonConfigHandler {
 			//Log.i("Config source is set from JSON: " + configSourceFilePath);
 		}
 	}
-
+	
+	
+	public boolean isJsonHasBeenRead() {
+		return this.configJsonHasBeenRead;
+	}
 
 
 }
