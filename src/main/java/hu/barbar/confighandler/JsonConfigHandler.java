@@ -125,11 +125,12 @@ public class JsonConfigHandler {
 
 	private Object getElementFromJson(String jsonKey){
 		if(!configJsonHasBeenRead){
-			this.configJson = FileHandler.readJSON(configSourceJSONPath);
+			readConfigFromJsonFile();
 		}
 		return this.getElementFromJson(jsonKey, this.configJson);
 	}
-
+	
+	
 
 	/**
 	 * Find the value for a specified key in given JSON object recursively.
@@ -169,6 +170,17 @@ public class JsonConfigHandler {
 	}
 
 	
+	private boolean readConfigFromJsonFile(){
+		this.configJson = FileHandler.readJSON(configSourceJSONPath);
+		return (this.configJson != null);
+	}
+
+	
+	private boolean storeConfigToJsonFile(){
+		return FileHandler.storeJSON(configSourceJSONPath, configJson);
+	}
+	
+	
 	
 	/**
 	 * Set the filepath of configSource JSON. (e.g.: ../data/config.json)
@@ -195,4 +207,22 @@ public class JsonConfigHandler {
 	}
 
 
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	public boolean put(String key, Object obj){
+		if(!configJsonHasBeenRead){
+			readConfigFromJsonFile();
+		}
+		if(!(key.contains("."))){
+			this.configJson.put(key, obj);
+			storeConfigToJsonFile();
+			return true;
+		}else{
+			System.out.println("Feature not implemented yet: Store values under multi-level key.");
+			return false;
+		}
+		
+	}
+	
 }
